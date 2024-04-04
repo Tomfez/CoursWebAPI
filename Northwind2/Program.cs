@@ -22,7 +22,7 @@ namespace Northwind2
 
             // Enregistre la classe de contexte de données comme service
             // en lui indiquant la connexion à utiliser
-            builder.Services.AddDbContext<ContexteNorthwind>(opt => opt.UseSqlServer(connect));
+            builder.Services.AddDbContext<ContexteNorthwind>(opt => opt.UseSqlServer(connect).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             builder.Services.AddScoped<IServiceEmployes, ServiceEmploye>();
 
             var app = builder.Build();

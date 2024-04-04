@@ -24,9 +24,9 @@ namespace Northwind2.Controllers
 
         // GET: api/Employes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employe>>> GetEmployes()
+        public async Task<ActionResult<IEnumerable<Employe>>> GetEmployes([FromQuery] string? nomEmploye)
         {
-            List<Employe> employes = await _service.ObtenirEmployes();
+            List<Employe> employes = await _service.ObtenirEmployes(nomEmploye);
             return Ok(employes);
         }
 
@@ -75,16 +75,15 @@ namespace Northwind2.Controllers
         //    return NoContent();
         //}
 
-        //// POST: api/Employes
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Employe>> PostEmploye(Employe employe)
-        //{
-        //    _context.Employes.Add(employe);
-        //    await _context.SaveChangesAsync();
+        // POST: api/Employes
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Employe>> PostEmploye(Employe employe)
+        {
+            Employe res = await _service.AjouterEmploye(employe);
 
-        //    return CreatedAtAction("GetEmploye", new { id = employe.Id }, employe);
-        //}
+            return CreatedAtAction("GetEmploye", new { id = res.Id }, res);
+        }
 
         //// DELETE: api/Employes/5
         //[HttpDelete("{id}")]

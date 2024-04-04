@@ -13,5 +13,6 @@
         public DateOnly? DateEmbauche { get; set; }
         public byte[]? Photo { get; set; }
         public string? Notes { get; set; }
+        public virtual Adresse Adresse { get; set; } = null!;
     }
 }
