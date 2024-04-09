@@ -35,7 +35,7 @@ namespace HoteIdentityServer
             builder.Services.AddIdentityServer(options =>
                   options.Authentication.CoordinateClientLifetimesWithUserSession = true)
 
-                // Cr�e des identit�s
+                // Crée des identités
                 .AddInMemoryIdentityResources(new IdentityResource[] {
          new IdentityResources.OpenId(),
          new IdentityResources.Profile(),

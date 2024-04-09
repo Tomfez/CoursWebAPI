@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Northwind2.Data;
 using Northwind2.Services;
@@ -24,6 +26,26 @@ namespace Northwind2
             // en lui indiquant la connexion à utiliser
             builder.Services.AddDbContext<ContexteNorthwind>(opt => opt.UseSqlServer(connect));
             builder.Services.AddScoped<IServiceEmployes, ServiceEmploye>();
+
+
+            // Ajoute le service d'authentification par porteur de jetons JWT
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                   // url d'accès au serveur d'identité
+                   options.Authority = builder.Configuration["IdentityServerUrl"];
+                   options.TokenValidationParameters.ValidateAudience = false;
+
+                   // Tolérance sur la durée de validité du jeton
+                   options.TokenValidationParameters.ClockSkew = TimeSpan.Zero;
+               });
+
+            // Ajoute le service d'autorisation
+            builder.Services.AddAuthorization(options =>
+            {
+                // Spécifie que tout utilisateur de l'API doit être authentifié
+                options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            });
 
             var app = builder.Build();
 
