@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Northwind2.Data;
 using Northwind2.Services;
+using System.Text.Json.Serialization;
 
 namespace Northwind2
 {
@@ -15,6 +16,15 @@ namespace Northwind2
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            // Enregistre les contrôleurs et ajoute une option de sérialisation
+            // pour interrompre les références circulaires infinies
+            builder.Services.AddControllers()
+                .AddNewtonsoftJson(opt =>
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddJsonOptions(opt =>
+                opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

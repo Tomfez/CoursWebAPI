@@ -57,7 +57,7 @@ namespace Northwind2.Data
             modelBuilder.Entity<Territoire>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.HasOne<Region>(t => t.Region).WithMany(r => r.Territoires).HasForeignKey(f => f.IdRegion)
+                entity.HasOne(t => t.Region).WithMany(r => r.Territoires).HasForeignKey(f => f.IdRegion)
                         .OnDelete(DeleteBehavior.NoAction);
 
                 // Crée la relation N-N avec Employe en utilisant l'entité Affectation comme entité d'association

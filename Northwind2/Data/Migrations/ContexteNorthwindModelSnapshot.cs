@@ -59,7 +59,7 @@ namespace Northwind2.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Adresses");
+                    b.ToTable("Adresses", (string)null);
                 });
 
             modelBuilder.Entity("Northwind2.Entities.Affectation", b =>
@@ -129,7 +129,7 @@ namespace Northwind2.Data.Migrations
 
                     b.HasIndex("IdManager");
 
-                    b.ToTable("Employes");
+                    b.ToTable("Employes", (string)null);
                 });
 
             modelBuilder.Entity("Northwind2.Entities.Region", b =>
@@ -144,7 +144,7 @@ namespace Northwind2.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regions");
+                    b.ToTable("Regions", (string)null);
                 });
 
             modelBuilder.Entity("Northwind2.Entities.Territoire", b =>
@@ -166,7 +166,7 @@ namespace Northwind2.Data.Migrations
 
                     b.HasIndex("IdRegion");
 
-                    b.ToTable("Territoires");
+                    b.ToTable("Territoires", (string)null);
                 });
 
             modelBuilder.Entity("Northwind2.Entities.Affectation", b =>
