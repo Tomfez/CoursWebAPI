@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components.Web;
+﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorWasm.Frontend;
 using BlazorWasm.Frontend.BFF;
@@ -14,6 +14,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, BffAuthenticationStatePr
 
 // HTTP client configuration
 builder.Services.AddTransient<AntiforgeryHandler>();
+
+builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddHttpClient("backend", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
     .AddHttpMessageHandler<AntiforgeryHandler>();

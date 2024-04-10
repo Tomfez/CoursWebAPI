@@ -5,5 +5,6 @@
         public string Id { get; set; } = string.Empty;
         public int IdRegion { get; set; }
         public string Nom { get; set; } = string.Empty;
+        public virtual Region Region { get; set; } = null!;
     }
 }

@@ -44,6 +44,16 @@ namespace Northwind2.Controllers
             return Ok(employe);
         }
 
+        [HttpGet("/api/Regions/{id}")]
+        public async Task<ActionResult<Region>> GetRegion(int id)
+        {
+            Region? region = await _service.ObtenirRegion(id);
+
+            if (region == null) return NotFound();
+
+            return Ok(region);
+        }
+
         //// PUT: api/Employes/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPut("{id}")]
