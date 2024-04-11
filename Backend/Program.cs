@@ -1,5 +1,6 @@
 ﻿using Duende.Bff;
 using Duende.Bff.Yarp;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,16 +25,18 @@ builder.Services.AddBff().AddRemoteApis();
 builder.Services.AddAuthentication(options =>
 {
     // Schémas d'authentification par défaut
-    options.DefaultScheme = "cookie";
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = "oidc";
-    options.DefaultSignOutScheme = "oidc";
+    //options.DefaultSignOutScheme = "oidc";
 })
+    .AddCookie()
     // Authentification par cookie
-    .AddCookie("cookie", options =>
-    {
-        options.Cookie.Name = "__Host-blazor";
-        options.Cookie.SameSite = SameSiteMode.Strict;
-    })
+    //.AddCookie("cookie", options =>
+    //{
+    //    options.Cookie.Name = "__Host-blazor";
+    //    options.Cookie.SameSite = SameSiteMode.Strict;
+    //})
+
     // Authentification OIDC
     .AddOpenIdConnect("oidc", options =>
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,9 @@ namespace Northwind2.Controllers
         }
 
         // GET: api/Employes
+        /// <summary>
+        /// Renvoie la liste des employés
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employe>>> GetEmployes()
         {
@@ -31,6 +35,12 @@ namespace Northwind2.Controllers
         }
 
         // GET: api/Employes/5
+        /// <summary>
+        /// Retourne un employé selon son id
+        /// </summary>
+        /// <param name="id">identifiant de l'employé</param>
+        /// <response code="200">renvoie l'employé d'id donné</response>
+        /// <response code="404">employé non trouvé</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<Employe>> GetEmploye(int id)
         {
@@ -45,6 +55,7 @@ namespace Northwind2.Controllers
         }
 
         [HttpGet("/api/Regions/{id}")]
+        [Authorize(Policy = "GérerEmployés")]
         public async Task<ActionResult<Region>> GetRegion(int id)
         {
             Region? region = await _service.ObtenirRegion(id);

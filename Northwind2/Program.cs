@@ -26,8 +26,13 @@ namespace Northwind2
                 opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddOpenApiDocument(options =>
+            {
+                options.Title = "API Northwind";
+                options.Description = "<strong>API Northwind2 pour formation ASP.Net Core.<br/>Code dispo sur <a href='https://github.com/developpeur-pro/CoursWebAPI'>ce référentiel GitHub</a></strong>";
+                options.Version = "v1";
+            });
 
             // Récupère la chaîne de connexion à la base dans les paramètres
             string? connect = builder.Configuration.GetConnectionString("Northwind2Connect");
@@ -62,8 +67,11 @@ namespace Northwind2
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                // Middleware serveur de définition d'API
+                app.UseOpenApi();
+
+                // Interface web pour la doc
+                app.UseSwaggerUi();
             }
 
             app.UseHttpsRedirection();
